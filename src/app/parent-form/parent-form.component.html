@@ -1,0 +1,6 @@
+<form [formGroup]="parentForm">
+  <button (click)="addChild($event)">Add childForm</button>
+  <input type="text" formControlName="name">
+  <app-child-form *ngFor="let i of nbChildren" [parentForm]="parentForm"></app-child-form>
+  <button (click)="displayForm()">Valid</button>
+</form>
