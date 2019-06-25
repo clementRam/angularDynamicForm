@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, ViewChild, ComponentFactory, ElementRef } from '@angular/core';
+import { FormBuilder, AbstractControl } from '@angular/forms';
+import { ChildFormComponent } from '../child-form/child-form.component';
 
 @Component({
   selector: 'app-parent-form',
@@ -8,13 +9,20 @@ import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 })
 export class ParentFormComponent implements OnInit {
 
+  @ViewChild(ChildFormComponent) childContainer: ElementRef;
+
+  childrenComponents = [];
   nbChildren: number[] = [1];
   parentForm = this.fb.group({
     name: [''],
     children: [[]]
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+     public viewContainerRef: ViewContainerRef,
+     private componentFactoryResolver: ComponentFactoryResolver
+     ) { }
 
   ngOnInit() {
   }
@@ -22,6 +30,12 @@ export class ParentFormComponent implements OnInit {
   addChild(){
     this.nbChildren = [...this.nbChildren, 1]
     console.log(this.nbChildren)
+  }
+
+  loadChildComponent(){
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ChildFormComponent);
+    this.childrenComponents = [...this.childrenComponents, componentFactory]
+    this.childContainer.createComponent(componentFactory)
   }
 
   displayForm(){

@@ -12,6 +12,9 @@ import { ChildFormComponent } from './child-form/child-form.component';
     ParentFormComponent,
     ChildFormComponent
   ],
+  entryComponents: [
+    ChildFormComponent
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule

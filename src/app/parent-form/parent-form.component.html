@@ -1,6 +1,7 @@
 <form [formGroup]="parentForm">
-  <button (click)="addChild($event)">Add childForm</button>
+  <button (click)="loadChildComponent()">Add childForm</button>
   <input type="text" formControlName="name">
+  <ng-template #childContainer></ng-template>
   <app-child-form *ngFor="let i of nbChildren" [parentForm]="parentForm"></app-child-form>
   <button (click)="displayForm()">Valid</button>
 </form>
